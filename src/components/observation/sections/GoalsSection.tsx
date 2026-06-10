@@ -1,8 +1,10 @@
 import { Plus, Target, Check, X, FileText } from "lucide-react";
 import { useState } from "react";
+import { GoalBuilder } from "../../iep/goals/GoalBuilder";
 
 export function GoalsSection() {
   const [showRepository, setShowRepository] = useState(false);
+  const [showGoalBuilder, setShowGoalBuilder] = useState(false);
   const [goals, setGoals] = useState([
     {
       id: 1,
@@ -143,12 +145,14 @@ export function GoalsSection() {
           ))}
           
           <button 
-            onClick={addCustomGoal}
+            onClick={() => setShowGoalBuilder(true)}
             className="w-full py-4 border-2 border-dashed border-slate-200 rounded-2xl text-sm font-bold text-slate-500 hover:border-slate-400 hover:bg-slate-50 transition-colors flex items-center justify-center gap-2"
           >
             <Plus className="w-4 h-4" /> Add Custom Goal Candidate
           </button>
        </div>
+       
+       {showGoalBuilder && <GoalBuilder onClose={() => setShowGoalBuilder(false)} />}
 
        {showRepository && (
          <div className="mt-8 pt-8 border-t border-slate-200 animate-in fade-in slide-in-from-top-4 duration-300">

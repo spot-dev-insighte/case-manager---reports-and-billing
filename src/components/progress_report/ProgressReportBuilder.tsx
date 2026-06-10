@@ -226,6 +226,12 @@ export function ProgressReportBuilder({ onExit, onNavigate, clientName = "Manan 
              <div className="bg-white border border-slate-200 rounded-2xl p-8 md:p-12 shadow-sm">
                <h3 className="text-2xl font-serif font-bold text-slate-900 mb-6 border-b border-slate-100 pb-4">Action Plan & Recommendations</h3>
                
+               <div className="mb-8 p-5 bg-slate-50/80 rounded-2xl border border-slate-200">
+                 <h4 className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2">Therapist Progress Notes</h4>
+                 <p className="text-sm text-slate-700 leading-relaxed font-medium">Client has shown consistent engagement. Will focus on generalizing these skills across environments.</p>
+               </div>
+
+               <h4 className="text-sm font-bold text-slate-900 mb-4">Action Items</h4>
                <div className="space-y-4">
                  <div className="flex gap-4 items-start p-4 bg-slate-50 rounded-xl border border-slate-200">
                     <div className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center shrink-0 font-bold">1</div>
@@ -543,21 +549,29 @@ export function ProgressReportBuilder({ onExit, onNavigate, clientName = "Manan 
                   <div className="flex items-center justify-between mb-4 mt-8">
                     <h2 className="text-xl font-bold text-slate-900">Action Plan (Next 6 Months)</h2>
                   </div>
-                  <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-4">
+                  <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-6">
                      
-                     <div className="grid grid-cols-12 gap-4 items-center bg-slate-50 p-4 rounded-xl border border-slate-200">
-                        <div className="col-span-12 md:col-span-6">
-                           <input type="text" className="w-full bg-white border border-slate-200 rounded-lg p-2 text-sm font-bold text-slate-800" defaultValue="Establish new Transition Goal" />
-                        </div>
-                        <div className="col-span-12 md:col-span-4">
-                           <input type="text" className="w-full bg-white border border-slate-200 rounded-lg p-2 text-sm text-slate-600" defaultValue="Therapist & Case Manager" />
-                        </div>
-                        <div className="col-span-12 md:col-span-2 text-right">
-                           <select className="bg-white border border-slate-200 rounded-lg p-2 text-sm font-bold text-indigo-700">
-                             <option>Planned</option>
-                             <option>In Progress</option>
-                           </select>
-                        </div>
+                     <div className="space-y-2">
+                       <label className="text-sm font-bold text-slate-800">Therapist Progress Notes</label>
+                       <textarea className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500/20 resize-none h-24 text-slate-700" placeholder="General progress notes for the next 6 months..." defaultValue="Client has shown consistent engagement. Will focus on generalizing these skills across environments." />
+                     </div>
+
+                     <div className="space-y-4">
+                       <label className="text-sm font-bold text-slate-800">Action Items</label>
+                       <div className="grid grid-cols-12 gap-4 items-center bg-slate-50 p-4 rounded-xl border border-slate-200">
+                          <div className="col-span-12 md:col-span-6">
+                             <input type="text" className="w-full bg-white border border-slate-200 rounded-lg p-2 text-sm font-bold text-slate-800" defaultValue="Establish new Transition Goal" />
+                          </div>
+                          <div className="col-span-12 md:col-span-4">
+                             <input type="text" className="w-full bg-white border border-slate-200 rounded-lg p-2 text-sm text-slate-600" defaultValue="Therapist & Case Manager" />
+                          </div>
+                          <div className="col-span-12 md:col-span-2 text-right">
+                             <select className="bg-white border border-slate-200 rounded-lg p-2 text-sm font-bold text-indigo-700">
+                               <option>Planned</option>
+                               <option>In Progress</option>
+                             </select>
+                          </div>
+                       </div>
                      </div>
 
                      <button className="flex items-center gap-2 px-4 py-3 bg-slate-50 border border-dashed border-slate-300 text-slate-600 hover:bg-slate-100 rounded-xl text-sm font-bold w-full justify-center transition-colors">

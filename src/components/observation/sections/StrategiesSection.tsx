@@ -1,17 +1,19 @@
 import { Plus, X } from "lucide-react";
 import { useState } from "react";
+import { StrategyBuilder } from "../../iep/goals/StrategyBuilder";
 
 export function StrategiesSection() {
   const [strategies, setStrategies] = useState([
     { id: 1, name: "Visual task breakdown", env: "Classroom", effectiveness: "Working" },
     { id: 2, name: "First-then board", env: "Transition", effectiveness: "Needs Adaptation" }
   ]);
+  const [showBuilder, setShowBuilder] = useState(false);
 
   return (
     <section id="strategies" className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 md:p-8 space-y-6">
        <div className="flex items-center justify-between mb-4">
          <h2 className="text-sm font-bold uppercase tracking-widest text-slate-400">Strategies Tried Ranking</h2>
-         <button className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-blue-600 bg-blue-50 rounded-lg border border-blue-200 hover:bg-blue-100 transition-colors">
+         <button onClick={() => setShowBuilder(true)} className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-blue-600 bg-blue-50 rounded-lg border border-blue-200 hover:bg-blue-100 transition-colors">
            <Plus className="w-3.5 h-3.5" /> Add Strategy
          </button>
        </div>
@@ -47,6 +49,16 @@ export function StrategiesSection() {
            </tbody>
          </table>
        </div>
+       
+       {showBuilder && (
+         <StrategyBuilder 
+           onClose={() => setShowBuilder(false)} 
+           onAdd={(title) => {
+             setStrategies([...strategies, { id: Date.now(), name: title, env: 'Varied', effectiveness: 'Testing' }]);
+             setShowBuilder(false);
+           }} 
+         />
+       )}
     </section>
   );
 }

@@ -8,6 +8,8 @@ import {
   FileText,
   Clock,
 } from "lucide-react";
+import { GoalBuilder } from "../iep/goals/GoalBuilder";
+import { StrategyBuilder } from "../iep/goals/StrategyBuilder";
 
 interface Goal {
   id: string;
@@ -29,9 +31,13 @@ export function DailySessionLog({ onExit }: { onExit: () => void }) {
   const [issuesToday, setIssuesToday] = useState<string>("None");
 
   const [activeGoals, setActiveGoals] = useState<string[]>([]);
+  const [nextSessionGoals, setNextSessionGoals] = useState<string[]>([]);
   const [concern, setConcern] = useState<string>("None");
   const [flagForReview, setFlagForReview] = useState(false);
   const [notesToParent, setNotesToParent] = useState("");
+  
+  const [showGoalBuilder, setShowGoalBuilder] = useState(false);
+  const [showStrategyBuilder, setShowStrategyBuilder] = useState(false);
 
   const [goals, setGoals] = useState<Goal[]>([
     { id: "G1", title: "Comprehension access" },
@@ -58,23 +64,17 @@ export function DailySessionLog({ onExit }: { onExit: () => void }) {
     }
   };
 
-  const handleAddCustomGoal = () => {
-    const title = prompt("Enter custom goal:");
-    if (title) {
-      const newId = `G_CUSTOM_${Date.now()}`;
-      setGoals([...goals, { id: newId, title, isCustom: true }]);
-      setActiveGoals([...activeGoals, newId]);
-    }
+  const handleAddCustomGoal = (title: string) => {
+    const newId = `G_CUSTOM_${Date.now()}`;
+    setGoals([...goals, { id: newId, title, isCustom: true }]);
+    setActiveGoals([...activeGoals, newId]);
   };
 
-  const handleAddCustomStrategy = () => {
-    const title = prompt("Enter custom strategy:");
-    if (title) {
-      setStrategies([
-        ...strategies,
-        { id: `S_CUSTOM_${Date.now()}`, title, isCustom: true },
-      ]);
-    }
+  const handleAddCustomStrategy = (title: string) => {
+    setStrategies([
+      ...strategies,
+      { id: `S_CUSTOM_${Date.now()}`, title, isCustom: true },
+    ]);
   };
 
   return (
@@ -253,7 +253,7 @@ export function DailySessionLog({ onExit }: { onExit: () => void }) {
                 3. Goals and Strategies
               </h2>
               <button
-                onClick={handleAddCustomGoal}
+                onClick={() => setShowGoalBuilder(true)}
                 className="flex items-center gap-1.5 text-xs font-bold text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-lg hover:bg-emerald-100 transition-colors"
               >
                 <Plus className="w-3.5 h-3.5" /> Add Goal
@@ -306,6 +306,17 @@ export function DailySessionLog({ onExit }: { onExit: () => void }) {
 
                     {isActive && (
                       <div className="p-4 border-t border-emerald-100 space-y-6 bg-white rounded-b-2xl">
+                        {/* Goal Brief */}
+                        <div className="bg-emerald-50/50 border border-emerald-100 p-3 rounded-xl">
+                          <p className="text-[10px] font-bold uppercase tracking-widest text-emerald-800 mb-1">Goal Brief</p>
+                          <p className="text-xs text-emerald-900 font-medium leading-relaxed">
+                            {goal.title === "Comprehension access" ? "Will independently use visual schedule and respond to short 1-2 step instructions in 4/5 opportunities." : 
+                             goal.title === "Transition predictability" ? "Will transition between classroom activities with minimal distress and max 1 verbal prompt." :
+                             "Given visual supports, will participate in structured peer interactions for at least 15 minutes."}
+                             {goal.isCustom && "Will achieve custom targeted outcome."}
+                          </p>
+                        </div>
+
                         {/* Activity */}
                         <div>
                           <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500 block mb-1.5">
@@ -327,17 +338,15 @@ export function DailySessionLog({ onExit }: { onExit: () => void }) {
                             <select className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500/20 appearance-none">
                               <option value="">Select level...</option>
                               <option>Independent</option>
-                              <option>Visual support</option>
-                              <option>Verbal support</option>
-                              <option>Modelled</option>
-                              <option>Physical support</option>
-                              <option>Co-regulation</option>
-                              <option>High adult support</option>
+                              <option>Occasional</option>
+                              <option>Moderate</option>
+                              <option>Substantial</option>
+                              <option>Full Support</option>
                             </select>
                           </div>
                           <div>
                             <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500 block mb-1.5">
-                              Progress signal
+                              Progress signal (Current metric)
                             </label>
                             <select className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500/20 appearance-none">
                               <option value="">Select signal...</option>
@@ -373,6 +382,11 @@ export function DailySessionLog({ onExit }: { onExit: () => void }) {
                               ))}
                             </select>
                           </div>
+                          {/* Strategy Brief */}
+                          <div className="bg-slate-50 border border-slate-200 p-3 rounded-xl">
+                            <p className="text-xs text-slate-600 font-medium">Brief: Describes the high-level approach for this strategy (pulled from IEP core strategy catalog).</p>
+                          </div>
+
                           <div>
                             <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500 block mb-1.5">
                               Was it useful today?
@@ -387,7 +401,7 @@ export function DailySessionLog({ onExit }: { onExit: () => void }) {
                               ].map((st) => (
                                 <button
                                   key={st}
-                                  className="px-3 py-1.5 text-xs font-semibold rounded-lg border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100"
+                                  className="px-3 py-1.5 text-xs font-semibold rounded-lg border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 transition-colors focus:ring-2 focus:ring-emerald-500/20"
                                 >
                                   {st}
                                 </button>
@@ -396,12 +410,11 @@ export function DailySessionLog({ onExit }: { onExit: () => void }) {
                           </div>
                           <div>
                             <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500 block mb-1.5">
-                              Adaptation made? (Optional)
+                              Notes on Goal Outcome
                             </label>
-                            <input
-                              type="text"
-                              placeholder="e.g. Used audio timer instead of visual timer"
-                              className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500/20"
+                            <textarea
+                              placeholder="How did the child respond to this strategy for this goal? Specific observations?"
+                              className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500/20 min-h-[80px] resize-none"
                             />
                           </div>
                         </div>
@@ -449,13 +462,13 @@ export function DailySessionLog({ onExit }: { onExit: () => void }) {
               />
             </div>
 
-            {/* Record Parent Feedback */}
+            {/* Inputs to Parents / From Parents */}
             <div className="space-y-3">
               <p className="text-sm font-bold text-slate-800">
-                Parent Feedback & Input Today
+                Inputs to Parents / From Parents
               </p>
               <textarea
-                placeholder="What did the parent report about behavior at home? Did they have any questions?"
+                placeholder="What did the parent report about behavior at home? Did they have any questions? What inputs do you have for them?"
                 className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 resize-none h-24 leading-relaxed"
               />
             </div>
@@ -533,30 +546,34 @@ export function DailySessionLog({ onExit }: { onExit: () => void }) {
           </section>
 
           {/* 6. Next Session Plan */}
-          <section className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
-            <h2 className="text-sm font-bold uppercase tracking-widest text-slate-400">
-              6. Next Session Plan
-            </h2>
-            <div>
-              <label className="text-sm font-bold text-slate-800 block mb-2">
-                Next step
-              </label>
-              <select
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500/20 appearance-none"
-              >
-                <option value="">Select next step...</option>
-                <option>Continue same goal</option>
-                <option>Try adapted strategy</option>
-                <option>Reduce support</option>
-                <option>Increase support</option>
-                <option>Observe again</option>
-                <option>Ask CM</option>
-                <option>Discuss with parent</option>
-              </select>
+          <section className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+            <div className="flex items-center justify-between">
+              <h2 className="text-sm font-bold uppercase tracking-widest text-slate-400">
+                6. Next Session Plan
+              </h2>
             </div>
+            
+            <div>
+              <p className="text-sm font-bold text-slate-800 mb-3">
+                Goals for Next Session
+              </p>
+              <div className="flex flex-wrap gap-2">
+                 {goals.map(g => (
+                   <button key={`next_${g.id}`} className={`px-3 py-1.5 text-xs font-semibold rounded-lg border transition-colors ${nextSessionGoals.includes(g.id) ? 'bg-emerald-50 border-emerald-300 text-emerald-800' : 'border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100'}`} onClick={() => {
+                     setNextSessionGoals(prev => prev.includes(g.id) ? prev.filter(x => x !== g.id) : [...prev, g.id]);
+                   }}>
+                      {g.title}
+                   </button>
+                 ))}
+                 <button onClick={() => setShowGoalBuilder(true)} className="px-3 py-1.5 text-xs font-semibold rounded-lg border border-emerald-200 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 flex items-center gap-1 transition-colors">
+                   <Plus className="w-3.5 h-3.5" /> Add Goal for Next Session
+                 </button>
+              </div>
+            </div>
+
             <div>
               <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500 block mb-1.5">
-                Notes
+                Notes on Next Session
               </label>
               <textarea
                 placeholder="What should be focused on next session?"
@@ -613,6 +630,20 @@ export function DailySessionLog({ onExit }: { onExit: () => void }) {
           </section>
         </div>
       </div>
+      
+      {showGoalBuilder && (
+        <GoalBuilder 
+          onClose={() => setShowGoalBuilder(false)} 
+          onAdd={handleAddCustomGoal} 
+        />
+      )}
+      
+      {showStrategyBuilder && (
+        <StrategyBuilder 
+          onClose={() => setShowStrategyBuilder(false)} 
+          onAdd={handleAddCustomStrategy} 
+        />
+      )}
     </div>
   );
 }

@@ -22,8 +22,8 @@ export function ObservationMainContent() {
       <ChildSnapshotSection />
       <ParentInputsSection />
       <SchoolInputsSection />
-      <EnvironmentsSection />
       <StrengthsSection />
+      <EnvironmentsSection />
       <SupportNeedsSection />
       <StrategiesSection />
       <GoalsSection />

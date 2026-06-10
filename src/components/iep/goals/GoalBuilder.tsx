@@ -3,11 +3,19 @@ import { X, CheckCircle2, AlertTriangle, ChevronRight, Brain } from "lucide-reac
 
 interface GoalBuilderProps {
   onClose: () => void;
+  onAdd?: (goalStatement: string) => void;
 }
 
-export function GoalBuilder({ onClose }: GoalBuilderProps) {
+export function GoalBuilder({ onClose, onAdd }: GoalBuilderProps) {
   const [step, setStep] = useState(1);
   const [statement, setStatement] = useState("");
+
+  const handleFinish = () => {
+    if (onAdd && statement) {
+      onAdd(statement);
+    }
+    onClose();
+  };
 
   return (
     <div className="fixed inset-0 bg-slate-900/50 z-50 flex justify-end">
@@ -149,6 +157,11 @@ export function GoalBuilder({ onClose }: GoalBuilderProps) {
                 <h3 className="text-xl font-bold text-slate-800 tracking-tight">Measurement & Implementation</h3>
                 
                 <div className="space-y-4">
+                  <div className="space-y-1.5">
+                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">Proposed Strategies</label>
+                    <textarea className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm bg-white h-20" placeholder="e.g. Provide a visual schedule and wait 5 seconds before prompting..." />
+                  </div>
+                  
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-1.5">
                       <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">Measurement Method</label>
@@ -204,10 +217,10 @@ export function GoalBuilder({ onClose }: GoalBuilderProps) {
               Cancel
             </button>
             <button 
-              onClick={onClose}
+              onClick={handleFinish}
               className="px-5 py-2.5 bg-blue-600 text-white rounded-xl text-sm font-bold hover:bg-blue-700 transition-colors shadow-sm"
             >
-              Add Goal to IEP
+              Add Goal
             </button>
           </div>
         )}

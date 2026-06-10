@@ -20,6 +20,7 @@ import {
   Briefcase
 } from "lucide-react";
 import { GoalBuilder } from "../iep/goals/GoalBuilder";
+import { StrategyBuilder } from "../iep/goals/StrategyBuilder";
 
 export function MonthlyReportBuilder({ onExit, onNavigate, clientName = "Manan Sarda", reportMonth = "May 2026" }: { onExit: () => void, onNavigate?: (nav: string) => void, clientName?: string, reportMonth?: string }) {
   const [isGenerated, setIsGenerated] = useState(false);
@@ -556,17 +557,15 @@ export function MonthlyReportBuilder({ onExit, onNavigate, clientName = "Manan S
                           {s.text}
                        </div>
                      ))}
-                     {showStrategyInput ? (
-                       <div className="mt-3 flex gap-2">
-                         <input type="text" autoFocus value={tempInput} onChange={(e) => setTempInput(e.target.value)} className="flex-1 bg-white border border-slate-200 rounded-lg px-3 text-sm focus:ring-2 focus:ring-blue-500/20" placeholder="Describe strategy..." />
-                         <button onClick={() => { if(tempInput) { setAdditionalStrategies([...additionalStrategies, {text: tempInput}]); } setTempInput(""); setShowStrategyInput(false); }} className="px-3 py-1.5 bg-slate-800 text-white text-xs font-bold rounded-lg border border-slate-700 hover:bg-slate-900">Add</button>
-                         <button onClick={() => { setShowStrategyInput(false); setTempInput(""); }} className="px-3 py-1.5 bg-white text-slate-500 border border-slate-200 text-xs font-bold rounded-lg hover:bg-slate-50">Cancel</button>
-                       </div>
-                     ) : (
-                       <button onClick={() => setShowStrategyInput(true)} className="mt-3 flex items-center gap-2 px-4 py-2 text-sm font-bold text-slate-600 bg-slate-50 hover:bg-slate-100 rounded-xl border border-slate-200 transition-colors">
-                         <Plus className="w-4 h-4" /> Add specific strategy detail
-                       </button>
+                     {showStrategyInput && (
+                       <StrategyBuilder 
+                         onClose={() => setShowStrategyInput(false)} 
+                         onAdd={(text) => setAdditionalStrategies([...additionalStrategies, {text}])} 
+                       />
                      )}
+                     <button onClick={() => setShowStrategyInput(true)} className="mt-3 flex items-center gap-2 px-4 py-2 text-sm font-bold text-slate-600 bg-slate-50 hover:bg-slate-100 rounded-xl border border-slate-200 transition-colors">
+                       <Plus className="w-4 h-4" /> Add specific strategy detail
+                     </button>
                   </div>
                </section>
                

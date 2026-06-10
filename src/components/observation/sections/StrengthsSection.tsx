@@ -76,13 +76,28 @@ export function StrengthsSection() {
            </div>
            
            <div className="relative" ref={dropdownRef}>
-              <button 
-                onClick={() => setDropdownOpen(!dropdownOpen)}
-                className="w-full flex items-center justify-between bg-slate-50 border border-slate-200 p-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-100 transition-colors"
-              >
-                Select from common strengths...
-                <ChevronDown className={`w-4 h-4 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} />
-              </button>
+              <div className="flex gap-2">
+                <button 
+                  onClick={() => setDropdownOpen(!dropdownOpen)}
+                  className="w-full flex items-center justify-between bg-slate-50 border border-slate-200 p-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-100 transition-colors"
+                >
+                  Select from common strengths...
+                  <ChevronDown className={`w-4 h-4 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} />
+                </button>
+                <div className="flex items-center gap-2">
+                  <input
+                    type="text"
+                    placeholder="Custom strength..."
+                    className="w-48 bg-slate-50 border border-slate-200 rounded-xl px-3 text-sm focus:ring-2 focus:ring-purple-500/20"
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' && e.currentTarget.value) {
+                        toggleStrength(e.currentTarget.value);
+                        e.currentTarget.value = '';
+                      }
+                    }}
+                  />
+                </div>
+              </div>
               
               {dropdownOpen && (
                 <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-slate-200 rounded-xl shadow-lg p-3 z-20 flex flex-wrap gap-2 max-h-64 overflow-y-auto">

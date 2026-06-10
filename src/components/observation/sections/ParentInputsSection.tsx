@@ -16,7 +16,7 @@ export function ParentInputsSection() {
         <div className="bg-rose-100 p-2 rounded-xl text-rose-600">
           <Users className="w-5 h-5" />
         </div>
-        <h2 className="text-sm font-bold uppercase tracking-widest text-slate-400">Parent Inputs</h2>
+        <h2 className="text-sm font-bold uppercase tracking-widest text-slate-400">Parent Inputs & Concerns</h2>
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -52,9 +52,9 @@ export function ParentInputsSection() {
       </div>
       
       <div className="pt-4 border-t border-slate-100">
-        <label className="text-sm font-bold text-slate-800 block mb-3">Home Context & Strengths Shared</label>
+        <label className="text-sm font-bold text-slate-800 block mb-3">Parent Inputs and Concerns</label>
         <textarea 
-          placeholder="Briefly note helpful context about the home environment..."
+          placeholder="Briefly note helpful context and concerns from parents..."
           className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-4 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-rose-500/20 resize-none h-24 leading-relaxed text-slate-700"
         />
       </div>
