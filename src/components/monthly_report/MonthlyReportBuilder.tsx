@@ -19,6 +19,7 @@ import {
   Activity,
   Briefcase
 } from "lucide-react";
+import { GoalBuilder } from "../iep/goals/GoalBuilder";
 
 export function MonthlyReportBuilder({ onExit, onNavigate, clientName = "Manan Sarda", reportMonth = "May 2026" }: { onExit: () => void, onNavigate?: (nav: string) => void, clientName?: string, reportMonth?: string }) {
   const [isGenerated, setIsGenerated] = useState(false);
@@ -398,19 +399,19 @@ export function MonthlyReportBuilder({ onExit, onNavigate, clientName = "Manan S
              </div>
           </section>
 
-          {/* 7. Generate Report */}
-          {!isGenerated && (
-            <section className="bg-blue-900 rounded-2xl p-8 shadow-sm text-white relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6">
-               <div className="absolute right-0 top-0 w-64 h-64 bg-blue-800 rounded-full blur-3xl opacity-50 -translate-y-1/2 translate-x-1/4"></div>
+         {/* 7. Generate Report */}
+         {!isGenerated && (
+            <section className="bg-slate-900 rounded-2xl p-8 shadow-sm text-white relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6">
+               <div className="absolute right-0 top-0 w-64 h-64 bg-indigo-900 rounded-full blur-3xl opacity-50 -translate-y-1/2 translate-x-1/4"></div>
                <div className="relative z-10 space-y-2">
-                 <h2 className="text-2xl font-serif font-bold">Ready to generate report</h2>
-                 <p className="text-blue-200 text-sm">31 evidence entries and 18 session logs available for {reportMonth}.</p>
+                 <h2 className="text-2xl font-serif font-bold">Ready to synthesize clinical insights</h2>
+                 <p className="text-slate-300 text-sm">31 evidence entries mapped to Clinical Engine cache. Bypassing engine if hash matches.</p>
                </div>
                <button 
                  onClick={() => setIsGenerated(true)}
-                 className="relative z-10 whitespace-nowrap px-6 py-3 bg-white text-blue-900 font-bold rounded-xl hover:bg-blue-50 transition-colors shadow-lg flex items-center gap-2"
+                 className="relative z-10 whitespace-nowrap px-6 py-3 bg-white text-slate-900 font-bold rounded-xl hover:bg-slate-100 transition-colors shadow-lg flex items-center gap-2"
                >
-                 <Sparkles className="w-5 h-5 text-blue-600" /> Generate Monthly Draft
+                 <Sparkles className="w-5 h-5 text-indigo-600" /> Generate Clinical Narrative
                </button>
             </section>
           )}
@@ -422,8 +423,11 @@ export function MonthlyReportBuilder({ onExit, onNavigate, clientName = "Manan S
                <section id="overview" className="scroll-mt-32 bg-white rounded-2xl border border-slate-200 shadow-sm p-6 md:p-8">
                   <div className="flex justify-between items-start mb-4">
                     <div>
-                      <h2 className="text-xl font-bold text-slate-900">Monthly Overview</h2>
-                      <p className="text-sm text-slate-500">High-level summary of engagement and progress.</p>
+                      <div className="flex items-center gap-3">
+                        <h2 className="text-xl font-bold text-slate-900">Monthly Synthesis</h2>
+                        <div className="text-[10px] font-bold uppercase tracking-widest text-indigo-600 bg-indigo-50 border border-indigo-100 px-2 py-1 rounded">Clinical Engine Cache (v-gemini)</div>
+                      </div>
+                      <p className="text-sm text-slate-500 mt-1">High-level summary of engagement and progress.</p>
                     </div>
                     <button className="p-2 hover:bg-slate-100 rounded-lg text-slate-400"><MoreVertical className="w-5 h-5"/></button>
                   </div>
@@ -622,35 +626,16 @@ export function MonthlyReportBuilder({ onExit, onNavigate, clientName = "Manan S
                  <h3 className="font-bold text-slate-800 mb-2">Additional Goals or Support Provided</h3>
                  <p className="text-sm text-slate-500 mb-4">Did you introduce new supports or goals not officially listed on the IEP?</p>
                  
-                 {showSuggestGoal ? (
-                    <div className="bg-indigo-50/50 border border-indigo-100 rounded-2xl p-6 animate-in fade-in duration-200">
-                       <div className="flex items-start gap-3 mb-4">
-                         <div className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center shrink-0">
-                           <Sparkles className="w-4 h-4" />
-                         </div>
-                         <div>
-                           <h4 className="text-sm font-bold text-indigo-900">Suggest Goal for Next IEP</h4>
-                           <p className="text-xs text-indigo-700">Frame a new goal directly from this month's observations to present to the Case Manager.</p>
-                         </div>
-                       </div>
-                       <label className="text-xs font-bold text-indigo-800 mb-2 block">Behavior or Challenge Observed</label>
-                       <textarea 
-                          className="w-full bg-white border border-indigo-200 rounded-xl p-4 text-sm focus:ring-2 focus:ring-indigo-500/20 mb-4 h-24 resize-none"
-                          placeholder="Describe the challenge..."
-                          value={newGoalSuggestion}
-                          onChange={(e) => setNewGoalSuggestion(e.target.value)}
-                       />
-                       <div className="flex justify-between items-center gap-2 pt-2 border-t border-indigo-100">
-                         <button className="text-xs font-bold text-indigo-600 flex items-center gap-1 hover:text-indigo-800"><Sparkles className="w-3 h-3" /> Auto-Draft Goal</button>
-                         <div className="flex gap-2">
-                           <button onClick={() => setShowSuggestGoal(false)} className="px-4 py-2 text-xs font-bold text-slate-600 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors">Cancel</button>
-                           <button onClick={() => { setShowSuggestGoal(false); setNewGoalSuggestion(""); }} className="px-4 py-2 text-xs font-bold bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-colors">Submit to Clinical Board</button>
-                         </div>
-                       </div>
-                    </div>
+                 {showSuggestGoal && <GoalBuilder onClose={() => { setShowSuggestGoal(false); setNewGoalSuggestion("Goal Added to Drafts."); }} />}
+                 
+                 {newGoalSuggestion ? (
+                   <div className="bg-indigo-50 border border-indigo-100 rounded-2xl p-4 flex justify-between items-center text-sm font-medium text-indigo-900">
+                     <p>"{newGoalSuggestion}"</p>
+                     <button onClick={() => setNewGoalSuggestion("")} className="text-xs font-bold text-indigo-600 hover:text-indigo-800">Remove</button>
+                   </div>
                  ) : (
                     <button onClick={() => setShowSuggestGoal(true)} className="flex items-center justify-center gap-2 px-4 py-3 bg-slate-50 border border-dashed border-slate-300 text-slate-600 hover:bg-slate-100 rounded-xl text-sm font-bold w-full transition-colors">
-                      <Plus className="w-4 h-4" /> Add record
+                      <Plus className="w-4 h-4" /> Add Goal to Clinical Board
                     </button>
                  )}
                </section>

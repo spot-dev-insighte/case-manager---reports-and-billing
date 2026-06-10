@@ -449,6 +449,17 @@ export function DailySessionLog({ onExit }: { onExit: () => void }) {
               />
             </div>
 
+            {/* Record Parent Feedback */}
+            <div className="space-y-3">
+              <p className="text-sm font-bold text-slate-800">
+                Parent Feedback & Input Today
+              </p>
+              <textarea
+                placeholder="What did the parent report about behavior at home? Did they have any questions?"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 resize-none h-24 leading-relaxed"
+              />
+            </div>
+
             {/* Internal Notes */}
             <div className="space-y-3">
               <p className="text-sm font-bold text-slate-800">

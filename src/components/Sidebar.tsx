@@ -19,16 +19,17 @@ export function Sidebar({ activeNav, onNavigate, isOpen, onClose }: SidebarProps
   const menuItems = [
     { id: 'cases', label: 'Case Files', icon: Users },
     { id: 'overview', label: 'Client Overview', icon: FileText },
-    { id: 'sessions', label: 'Sessions', icon: Calendar },
-    { id: 'clinical-plan', label: 'Clinical Plan', icon: ClipboardList },
     { 
       id: 'reports', 
       label: 'Reports', 
       icon: FileText,
       subItems: [
+        { id: 'sessions', label: 'Session Logs' },
         { id: 'observation-report', label: 'Observation Report' },
+        { id: 'clinical-plan', label: 'IEP Report' },
         { id: 'monthly-report', label: 'Monthly Report' },
-        { id: 'progress-review', label: 'Progress & IEP Review' },
+        { id: 'progress-review', label: 'Progress Report' },
+        { id: 'report-history', label: 'Report History' },
       ]
     },
     { id: 'incidents', label: 'Incidents & Support', icon: AlertTriangle },

@@ -12,6 +12,7 @@ import { SessionLogModule } from './components/session_log/SessionLogModule';
 import { MonthlyReportModule } from './components/monthly_report/MonthlyReportModule';
 import { ProgressReportModule } from './components/progress_report/ProgressReportModule';
 import { CaseFileModule } from './components/case_file/CaseFileModule';
+import { ReportHistory } from './components/reports/ReportHistory';
 import { ClipboardList } from 'lucide-react';
 
 export default function App() {
@@ -56,6 +57,8 @@ export default function App() {
             <MonthlyReportModule onNavigate={setActiveNav} />
           ) : activeNav === 'progress-review' ? (
             <ProgressReportModule onNavigate={setActiveNav} />
+          ) : activeNav === 'report-history' ? (
+            <ReportHistory />
           ) : (
             <div className="p-8 flex flex-col items-center justify-center h-full text-slate-400 gap-4">
               <ClipboardList className="w-12 h-12 text-slate-300" />

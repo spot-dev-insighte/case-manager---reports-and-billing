@@ -72,14 +72,34 @@ export function GoalBuilder({ onClose }: GoalBuilderProps) {
                   </div>
                   
                   <div className="space-y-1.5">
-                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">Goal Statement</label>
+                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">Goal Statement (Outcome)</label>
                     <div className="text-xs text-slate-500 mb-2">Include context, support permitted, expected outcome, and time period.</div>
                     <textarea 
                       value={statement}
                       onChange={(e) => setStatement(e.target.value)}
-                      className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:ring-2 focus:ring-blue-500/20 bg-white h-32"
-                      placeholder="Given [support], [Name] will [action] in [environment]..."
+                      className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:ring-2 focus:ring-blue-500/20 bg-white h-24"
+                      placeholder="Given [support], [Name] will [action]..."
                     />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">Success Indicators</label>
+                    <textarea 
+                      className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:ring-2 focus:ring-blue-500/20 bg-white h-20"
+                      placeholder="e.g. independently requests break, remains seated for 10 min..."
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">Target Environment</label>
+                    <div className="flex flex-wrap gap-2">
+                       {['Classroom', 'Playground', 'Therapy Room', 'Home', 'Community'].map(env => (
+                         <label key={env} className="flex items-center gap-2 border border-slate-200 px-3 py-2 rounded-lg text-sm cursor-pointer hover:bg-slate-50">
+                           <input type="checkbox" className="rounded text-blue-600 focus:ring-blue-500" />
+                           {env}
+                         </label>
+                       ))}
+                    </div>
                   </div>
 
                   <button onClick={() => setStep(3)} className="w-full px-5 py-3 bg-slate-900 text-white rounded-xl text-sm font-bold flex flex-row items-center justify-center gap-2 hover:bg-slate-800">
