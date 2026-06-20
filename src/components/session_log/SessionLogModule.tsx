@@ -6,9 +6,10 @@ import { PatientBanner } from '../PatientBanner';
 interface SessionLogModuleProps {
   autoStart?: boolean;
   onExitAutoStart?: () => void;
+  client?: { id: string; name: string; grade: string; support?: string };
 }
 
-export function SessionLogModule({ autoStart, onExitAutoStart }: SessionLogModuleProps) {
+export function SessionLogModule({ autoStart, onExitAutoStart, client }: SessionLogModuleProps) {
   const [isSessionStarted, setIsSessionStarted] = useState(false);
 
   useEffect(() => {
@@ -21,16 +22,18 @@ export function SessionLogModule({ autoStart, onExitAutoStart }: SessionLogModul
     return <DailySessionLog onExit={() => {
       setIsSessionStarted(false);
       onExitAutoStart?.();
-    }} />;
+    }} client={client} />;
   }
+
+  const clientName = client?.name || "Manan Sarda";
 
   return (
     <div className="h-full flex flex-col bg-[#fafafa]">
       <PatientBanner 
-        name="Manan Sarda" 
-        id="#0001" 
+        name={clientName} 
+        id={`#${(client?.id || '0001').padStart(4, '0')}`} 
         dob="14 Aug 2017" 
-        age="8 yrs" 
+        age={client ? client.grade : "8 yrs"} 
         diagnosis="Autism Spectrum Disorder" 
         status="Active" 
       />

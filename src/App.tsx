@@ -18,6 +18,7 @@ import { ClipboardList } from 'lucide-react';
 export default function App() {
   const [activeNav, setActiveNav] = useState('cases');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeClient, setActiveClient] = useState({ id: 'manan', name: 'Manan Sarda', grade: 'Grade 4' });
 
   return (
     <div className="flex h-[100dvh] bg-[#F8F7F4] text-slate-800 font-sans">
@@ -40,25 +41,30 @@ export default function App() {
       />
       
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden h-[100dvh]">
-        <TopHeader onMenuClick={() => setIsMobileMenuOpen(true)} onNavigate={setActiveNav} />
+        <TopHeader 
+          onMenuClick={() => setIsMobileMenuOpen(true)} 
+          onNavigate={setActiveNav} 
+          activeClient={activeClient}
+          onClientChange={setActiveClient}
+        />
         
         <main className="flex-1 overflow-y-auto w-full relative h-[100dvh]">
           {activeNav === 'cases' ? (
-            <CaseFileModule onNavigate={setActiveNav} />
+            <CaseFileModule onNavigate={setActiveNav} client={activeClient} />
           ) : activeNav === 'observation-report' ? (
-            <ObservationModule onNavigate={setActiveNav} />
+            <ObservationModule onNavigate={setActiveNav} client={activeClient} />
           ) : activeNav === 'clinical-plan' ? (
-            <IEPModule onNavigate={setActiveNav} />
+            <IEPModule onNavigate={setActiveNav} client={activeClient} />
           ) : activeNav === 'sessions' ? (
-            <SessionLogModule />
+            <SessionLogModule client={activeClient} />
           ) : activeNav === 'start-session' ? (
-            <SessionLogModule autoStart={true} onExitAutoStart={() => setActiveNav('sessions')} />
+            <SessionLogModule autoStart={true} onExitAutoStart={() => setActiveNav('sessions')} client={activeClient} />
           ) : activeNav === 'monthly-report' ? (
-            <MonthlyReportModule onNavigate={setActiveNav} />
+            <MonthlyReportModule onNavigate={setActiveNav} client={activeClient} />
           ) : activeNav === 'progress-review' ? (
-            <ProgressReportModule onNavigate={setActiveNav} />
+            <ProgressReportModule onNavigate={setActiveNav} client={activeClient} />
           ) : activeNav === 'report-history' ? (
-            <ReportHistory />
+            <ReportHistory client={activeClient} />
           ) : (
             <div className="p-8 flex flex-col items-center justify-center h-full text-slate-400 gap-4">
               <ClipboardList className="w-12 h-12 text-slate-300" />

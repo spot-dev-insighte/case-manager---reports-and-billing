@@ -1,14 +1,16 @@
 import { useState } from "react";
 import { Calendar, CheckCircle2, Clock, FileText, ChevronDown, Plus } from "lucide-react";
 import { MonthlyReportBuilder } from "./MonthlyReportBuilder";
+import { CLIENTS } from "../TopHeader";
 
-export function MonthlyReportModule({ onNavigate }: { onNavigate?: (nav: string) => void }) {
+export function MonthlyReportModule({ onNavigate, client }: { onNavigate?: (nav: string) => void, client?: { id: string; name: string; grade: string; support?: string } }) {
   const [isBuildingReport, setIsBuildingReport] = useState(false);
   const [selectedMonth, setSelectedMonth] = useState("May 2026");
-  const [selectedClientToGenerate, setSelectedClientToGenerate] = useState("");
+  const [selectedClientToGenerate, setSelectedClientToGenerate] = useState(client ? client.id : "");
 
   if (isBuildingReport) {
-    return <MonthlyReportBuilder onExit={() => setIsBuildingReport(false)} onNavigate={onNavigate} clientName={selectedClientToGenerate === 'manan' ? 'Manan Sarda' : selectedClientToGenerate === 'aarav' ? 'Aarav Patel' : selectedClientToGenerate === 'zoya' ? 'Zoya Khan' : 'Manan Sarda'} reportMonth={selectedMonth} />;
+    const generatingClientName = CLIENTS.find(c => c.id === selectedClientToGenerate)?.name || client?.name || 'Manan Sarda';
+    return <MonthlyReportBuilder onExit={() => setIsBuildingReport(false)} onNavigate={onNavigate} clientName={generatingClientName} reportMonth={selectedMonth} />;
   }
 
   return (
@@ -32,7 +34,7 @@ export function MonthlyReportModule({ onNavigate }: { onNavigate?: (nav: string)
                      onChange={(e) => setSelectedClientToGenerate(e.target.value)}
                    >
                      <option value="">Select Client...</option>
-                     <option value="manan">Manan Sarda</option>
+                     {CLIENTS.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
                      <option value="aarav">Aarav Patel</option>
                      <option value="zoya">Zoya Khan</option>
                    </select>
@@ -96,7 +98,7 @@ export function MonthlyReportModule({ onNavigate }: { onNavigate?: (nav: string)
                           <span className="text-[10px] font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded uppercase tracking-widest">Pending Review</span>
                           <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">{selectedMonth}</span>
                         </div>
-                        <h4 className="text-lg font-bold text-slate-900">Manan Sarda</h4>
+                        <h4 className="text-lg font-bold text-slate-900">{client?.name || "Manan Sarda"}</h4>
                       </div>
                       <div className="text-right">
                          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Case Manager</span>

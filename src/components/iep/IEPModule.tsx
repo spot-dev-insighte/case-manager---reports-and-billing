@@ -2,7 +2,7 @@ import { useState } from "react";
 import { IEPDashboard } from "./IEPDashboard";
 import { IEPWorkspace } from "./IEPWorkspace";
 
-export function IEPModule({ onNavigate }: { onNavigate?: (nav: string) => void }) {
+export function IEPModule({ onNavigate, client }: { onNavigate?: (nav: string) => void, client?: { id: string; name: string; grade: string; support?: string } }) {
   const [view, setView] = useState<'dashboard' | 'workspace' | 'preview'>('dashboard');
   const [selectedIep, setSelectedIep] = useState<string | null>(null);
 
@@ -23,11 +23,11 @@ export function IEPModule({ onNavigate }: { onNavigate?: (nav: string) => void }
   };
 
   if (view === 'dashboard') {
-    return <IEPDashboard onOpen={handleOpenIep} onCreate={handleCreateIep} onNavigate={onNavigate} />;
+    return <IEPDashboard onOpen={handleOpenIep} onCreate={handleCreateIep} onNavigate={onNavigate} client={client} />;
   }
 
   if (view === 'workspace') {
-    return <IEPWorkspace id={selectedIep} onBack={handleBackToDashboard} onNavigate={onNavigate} />;
+    return <IEPWorkspace id={selectedIep} onBack={handleBackToDashboard} onNavigate={onNavigate} client={client} />;
   }
 
   return (

@@ -5,11 +5,11 @@ import {
 } from 'lucide-react';
 import { CaseFileDetails } from './CaseFileDetails';
 
-export function CaseFileModule({ onNavigate }: { onNavigate: (nav: string) => void }) {
+export function CaseFileModule({ onNavigate, client }: { onNavigate: (nav: string) => void, client?: { id: string; name: string; grade: string; support?: string } }) {
   const [selectedCase, setSelectedCase] = useState<string | null>(null);
 
   if (selectedCase) {
-    return <CaseFileDetails caseId={selectedCase} onBack={() => setSelectedCase(null)} onNavigate={onNavigate} />;
+    return <CaseFileDetails caseId={selectedCase} onBack={() => setSelectedCase(null)} onNavigate={onNavigate} client={client} />;
   }
 
   const cases = [

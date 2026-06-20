@@ -1,16 +1,18 @@
 import { useState } from "react";
 import { ProgressReportBuilder } from "./ProgressReportBuilder";
+import { CLIENTS } from "../TopHeader";
 
-export function ProgressReportModule({ onNavigate }: { onNavigate?: (nav: string) => void }) {
+export function ProgressReportModule({ onNavigate, client }: { onNavigate?: (nav: string) => void, client?: { id: string; name: string; grade: string; support?: string } }) {
   const [isBuildingReport, setIsBuildingReport] = useState(false);
-  const [selectedClientToGenerate, setSelectedClientToGenerate] = useState("");
+  const [selectedClientToGenerate, setSelectedClientToGenerate] = useState(client ? client.id : "");
   const [selectedType, setSelectedType] = useState("Six-Month Progress Review");
 
   if (isBuildingReport) {
+    const generatingClientName = CLIENTS.find(c => c.id === selectedClientToGenerate)?.name || client?.name || 'Manan Sarda';
     return <ProgressReportBuilder 
                onExit={() => setIsBuildingReport(false)} 
                onNavigate={onNavigate} 
-               clientName={selectedClientToGenerate === 'manan' ? 'Manan Sarda' : 'Aarav Patel'} 
+               clientName={generatingClientName} 
                reportType={selectedType} 
            />;
   }
@@ -36,7 +38,7 @@ export function ProgressReportModule({ onNavigate }: { onNavigate?: (nav: string
                      onChange={(e) => setSelectedClientToGenerate(e.target.value)}
                    >
                      <option value="">Choose a client...</option>
-                     <option value="manan">Manan Sarda</option>
+                     {CLIENTS.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
                      <option value="aarav">Aarav Patel</option>
                    </select>
                 </div>
