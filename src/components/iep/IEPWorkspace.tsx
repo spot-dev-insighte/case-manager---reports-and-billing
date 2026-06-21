@@ -17,18 +17,14 @@ interface IEPWorkspaceProps {
   id: string | null;
   onBack: () => void;
   onNavigate?: (nav: string) => void;
-  client?: { id: string; name: string; grade: string; support?: string };
 }
 
-export function IEPWorkspace({ id, onBack, onNavigate, client }: IEPWorkspaceProps) {
+export function IEPWorkspace({ id, onBack, onNavigate }: IEPWorkspaceProps) {
   const [activeSection, setActiveSection] = useState("overview");
   const [showMobileBrain, setShowMobileBrain] = useState(false);
   const [showDesktopInsights, setShowDesktopInsights] = useState(false);
   const [view, setView] = useState<'edit' | 'preview'>('edit');
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-
-  const clientName = client ? client.name : (id === 'manan' || id === 'manan-iep' ? "Manan Sarda" : "Unknown Child");
-  const firstName = clientName.split(' ')[0];
 
   const handleScrollTo = (sectionId: string) => {
     setActiveSection(sectionId);
@@ -71,7 +67,7 @@ export function IEPWorkspace({ id, onBack, onNavigate, client }: IEPWorkspacePro
                     <Brain className="w-3.5 h-3.5" /> AI-Enhanced Document
                   </div>
                   <h1 className="text-3xl font-serif font-bold text-slate-900">Individualized Education Plan</h1>
-                  <p className="text-lg text-slate-700 font-medium">{clientName}</p>
+                  <p className="text-lg text-slate-700 font-medium">Manan Sarda</p>
                   <p className="text-sm text-slate-500 font-medium">Period: 25 Oct 2025 – 25 Apr 2026</p>
                   <p className="text-sm text-slate-500 font-medium">DOB: 12 May 2018 (Age 7)</p>
                 </div>
@@ -87,7 +83,7 @@ export function IEPWorkspace({ id, onBack, onNavigate, client }: IEPWorkspacePro
                   </div>
                   <div>
                     <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Parents / Guardians</p>
-                    <p className="text-slate-700">Shikha Sarda</p> // TODO: Parameterize this if needed
+                    <p className="text-slate-700">Shikha Sarda</p>
                   </div>
                 </div>
               </div>
@@ -109,7 +105,7 @@ export function IEPWorkspace({ id, onBack, onNavigate, client }: IEPWorkspacePro
                   <h3 className="font-bold text-slate-800" contentEditable suppressContentEditableWarning>Communication</h3>
                   <textarea 
                     className="w-full text-sm text-slate-700 p-3 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:outline-none min-h-[80px]"
-                    defaultValue={`${firstName} is a verbal communicator who benefits from structural support when encountering ambiguous language.`}
+                    defaultValue="Manan is a verbal communicator who benefits from structural support when encountering ambiguous language."
                   />
                 </div>
               </div>
@@ -139,7 +135,7 @@ export function IEPWorkspace({ id, onBack, onNavigate, client }: IEPWorkspacePro
                   <p className="text-sm text-slate-700 leading-relaxed font-medium">Goal Statement:</p>
                   <textarea 
                     className="w-full text-sm text-slate-700 italic border border-slate-200 p-3 bg-white rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:outline-none min-h-[100px]"
-                    defaultValue={`Given a visual transition countdown and access to his AAC device, ${firstName} will request "help" or "more time" during unstructured transitions instead of dropping to the floor, in 4 out of 5 observed opportunities over a two-week period.`}
+                    defaultValue={'Given a visual transition countdown and access to his AAC device, Manan will request "help" or "more time" during unstructured transitions instead of dropping to the floor, in 4 out of 5 observed opportunities over a two-week period.'}
                   />
                   <p className="text-sm text-slate-700 leading-relaxed font-medium mt-4">Intervention Strategy & Outcomes:</p>
                   <textarea 
@@ -203,7 +199,7 @@ export function IEPWorkspace({ id, onBack, onNavigate, client }: IEPWorkspacePro
       {/* Top Header */}
       <IEPTopHeader 
         onBack={onBack} 
-        childName={clientName} 
+        childName={id === 'manan' || id === 'manan-iep' ? "Manan Sarda" : "Unknown Child"} 
         period="25 Oct 2025 – 25 Apr 2026" 
         showInsights={showDesktopInsights}
         onToggleInsights={() => setShowDesktopInsights(!showDesktopInsights)}

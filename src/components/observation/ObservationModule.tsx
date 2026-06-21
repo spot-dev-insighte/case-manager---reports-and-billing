@@ -3,14 +3,13 @@ import { Plus, Search, FileText, CheckCircle2, Clock, MapPin, Target, Settings, 
 import { ClinicalBrainPanel } from "./ClinicalBrainPanel";
 import { ObservationMainContent } from "./ObservationMainContent";
 import { TopHeader } from "./TopHeader";
-import { CLIENTS } from "../TopHeader";
 
-export function ObservationModule({ onNavigate, client }: { onNavigate?: (nav: string) => void, client?: { id: string; name: string; grade: string; support?: string } }) {
+export function ObservationModule({ onNavigate }: { onNavigate?: (nav: string) => void }) {
   const [view, setView] = useState<'dashboard' | 'report'>('dashboard');
   const [showCreateModal, setShowCreateModal] = useState(false);
   
   // Create Modal state
-  const [selectedCase, setSelectedCase] = useState(client ? client.id : "manan");
+  const [selectedCase, setSelectedCase] = useState("manan");
   const [periodStart, setPeriodStart] = useState("2026-05-05");
   const [periodEnd, setPeriodEnd] = useState("2026-05-23");
 
@@ -18,8 +17,6 @@ export function ObservationModule({ onNavigate, client }: { onNavigate?: (nav: s
     setShowCreateModal(false);
     setView('report');
   };
-
-  const clientName = client?.name || "Manan Sarda";
 
   if (view === 'report') {
     return (
@@ -101,7 +98,7 @@ export function ObservationModule({ onNavigate, client }: { onNavigate?: (nav: s
                      <FileText className="w-5 h-5" />
                    </div>
                    <div>
-                     <h3 className="font-bold text-slate-900">{clientName}</h3>
+                     <h3 className="font-bold text-slate-900">Manan Sarda</h3>
                      <p className="text-xs text-slate-500 font-medium">Period: 5 May 2026 - 23 May 2026</p>
                    </div>
                 </div>
@@ -177,7 +174,9 @@ export function ObservationModule({ onNavigate, client }: { onNavigate?: (nav: s
                      className="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm font-medium focus:ring-2 focus:ring-blue-500/20 focus:outline-none"
                    >
                      <option value="" disabled>Select a client...</option>
-                     {CLIENTS.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+                     <option value="manan">Manan Sarda</option>
+                     <option value="aisha">Aisha Khan</option>
+                     <option value="leo">Leo Carmichael</option>
                    </select>
                  </div>
                  

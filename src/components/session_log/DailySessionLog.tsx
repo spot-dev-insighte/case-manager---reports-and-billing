@@ -23,7 +23,7 @@ interface Strategy {
   isCustom?: boolean;
 }
 
-export function DailySessionLog({ onExit, client }: { onExit: () => void, client?: { id: string; name: string; grade: string; support?: string } }) {
+export function DailySessionLog({ onExit }: { onExit: () => void }) {
   const [sessionCompleted, setSessionCompleted] = useState<string>("Yes");
   const [actualStart, setActualStart] = useState("08:10");
   const [actualEnd, setActualEnd] = useState("12:30");
@@ -77,9 +77,6 @@ export function DailySessionLog({ onExit, client }: { onExit: () => void, client
     ]);
   };
 
-  const clientName = client?.name || "Manan Sarda";
-  const firstName = clientName.split(' ')[0] || "Manan";
-
   return (
     <div className="flex flex-col h-full bg-[#F8F7F4] relative">
       {/* Header */}
@@ -93,7 +90,7 @@ export function DailySessionLog({ onExit, client }: { onExit: () => void, client
           </button>
           <div>
             <h1 className="text-lg font-serif font-bold text-slate-900">
-              {firstName}'s Daily Session Log
+              Manan's Daily Session Log
             </h1>
             <p className="text-xs text-slate-500 font-medium">
               10 June 2026 • Scheduled: 8:10 AM - 12:30 PM • Shadow Support

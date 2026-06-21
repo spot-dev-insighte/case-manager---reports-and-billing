@@ -1,15 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { FileText, Search, ChevronRight, Calculator, FileCheck, CheckCircle2, Clock } from 'lucide-react';
-import { CLIENTS } from '../TopHeader';
 
-export function ReportHistory({ client }: { client?: { id: string; name: string } }) {
-  const [selectedClient, setSelectedClient] = useState(client ? client.name : 'all');
-
-  useEffect(() => {
-    if (client) {
-      setSelectedClient(client.name);
-    }
-  }, [client]);
+export function ReportHistory() {
+  const [selectedClient, setSelectedClient] = useState('all');
 
   const history = [
     { id: 1, type: 'Monthly Report', client: 'Manan Sarda', date: 'Jun 10, 2026', status: 'Draft', color: 'blue' },
@@ -43,9 +36,9 @@ export function ReportHistory({ client }: { client?: { id: string; name: string 
                  onChange={(e) => setSelectedClient(e.target.value)}
                >
                  <option value="all">All Clients</option>
-                 {CLIENTS.map(c => (
-                   <option key={c.id} value={c.name}>{c.name}</option>
-                 ))}
+                 <option value="Manan Sarda">Manan Sarda</option>
+                 <option value="Aisha Khan">Aisha Khan</option>
+                 <option value="Leo Carmichael">Leo Carmichael</option>
                </select>
              </div>
              <div className="relative">

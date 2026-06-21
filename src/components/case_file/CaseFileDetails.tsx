@@ -9,16 +9,12 @@ interface CaseFileDetailsProps {
   caseId: string;
   onBack: () => void;
   onNavigate: (nav: string) => void;
-  client?: { id: string; name: string; grade: string; support?: string };
 }
 
-export function CaseFileDetails({ caseId, onBack, onNavigate, client }: CaseFileDetailsProps) {
+export function CaseFileDetails({ caseId, onBack, onNavigate }: CaseFileDetailsProps) {
   const [activeTab, setActiveTab] = useState('history');
   const [showInsights, setShowInsights] = useState(false);
   const [approvingGoalId, setApprovingGoalId] = useState<string | null>(null);
-
-  const clientName = client?.name || 'Manan Sarda';
-  const firstName = clientName.split(' ')[0] || 'Manan';
 
   return (
     <div className="h-full flex flex-col w-full overflow-hidden bg-slate-50 relative">
@@ -33,12 +29,12 @@ export function CaseFileDetails({ caseId, onBack, onNavigate, client }: CaseFile
           </button>
           <div>
             <div className="flex items-center gap-3">
-              <h1 className="text-xl font-bold text-slate-900">{clientName}</h1>
+              <h1 className="text-xl font-bold text-slate-900">Manan Sarda</h1>
               <span className="px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wide border bg-emerald-50 text-emerald-700 border-emerald-100">
                 Active
               </span>
             </div>
-            <p className="text-xs font-medium text-slate-500">ID: #{caseId.padStart(4, '0')} • {client ? 'Grade: ' + client.grade : 'Age: 8'} • Enrolled: Jan 2024</p>
+            <p className="text-xs font-medium text-slate-500">ID: #0001 • Age: 8 • Enrolled: Jan 2024</p>
           </div>
         </div>
         
